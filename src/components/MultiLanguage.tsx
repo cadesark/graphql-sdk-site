@@ -61,9 +61,10 @@ export function MultiLanguage(): React.JSX.Element {
                     </div>
                 </div>
                 <p className="mt-8 border-t border-line pt-6 text-pretty text-sm leading-relaxed text-slate-400">
-                    A second emitter (Python is the natural next target) re-implements only the selection types, the
-                    grouped client surface, and the small <span className="font-mono text-fern">core/graphql</span>{" "}
-                    runtime — proving the design is language-agnostic rather than TypeScript-specific.
+                    <span className="text-fern">Python is now shipped</span> — the second emitter re-implements only
+                    the selection materialization (fluent builder classes), the grouped client surface, and the small{" "}
+                    <span className="font-mono text-fern">core/graphql</span> runtime, proving the design is
+                    language-agnostic rather than TypeScript-specific. See it below.
                 </p>
             </div>
         </Section>

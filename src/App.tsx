@@ -7,6 +7,7 @@ import { MultiLanguage } from "./components/MultiLanguage.tsx";
 import { Nav } from "./components/Nav.tsx";
 import { Pipeline } from "./components/Pipeline.tsx";
 import { Playground } from "./components/Playground.tsx";
+import { PythonShowcase } from "./components/PythonShowcase.tsx";
 
 export function App(): React.JSX.Element {
     return (
@@ -19,6 +20,7 @@ export function App(): React.JSX.Element {
                 <FeatureGallery />
                 <Comparison />
                 <MultiLanguage />
+                <PythonShowcase />
             </main>
             <Footer />
         </>

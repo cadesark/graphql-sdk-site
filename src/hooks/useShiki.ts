@@ -5,9 +5,10 @@ import githubDark from "shiki/themes/github-dark-default.mjs";
 import bash from "shiki/langs/bash.mjs";
 import graphql from "shiki/langs/graphql.mjs";
 import json from "shiki/langs/json.mjs";
+import python from "shiki/langs/python.mjs";
 import typescript from "shiki/langs/typescript.mjs";
 
-export type CodeLang = "typescript" | "graphql" | "json" | "bash";
+export type CodeLang = "typescript" | "graphql" | "json" | "bash" | "python";
 
 let highlighterPromise: Promise<HighlighterCore> | undefined;
 
@@ -17,7 +18,7 @@ function getHighlighter(): Promise<HighlighterCore> {
     if (highlighterPromise == null) {
         highlighterPromise = createHighlighterCore({
             themes: [githubDark],
-            langs: [typescript, graphql, json, bash],
+            langs: [typescript, graphql, json, bash, python],
             engine: createOnigurumaEngine(import("shiki/wasm"))
         });
     }

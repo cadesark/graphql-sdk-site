@@ -4,7 +4,8 @@ const LINKS: { href: string; label: string }[] = [
     { href: "#playground", label: "Playground" },
     { href: "#features", label: "Features" },
     { href: "#compare", label: "Compare" },
-    { href: "#languages", label: "Languages" }
+    { href: "#languages", label: "Languages" },
+    { href: "#python", label: "Python" }
 ];
 
 export function Nav(): React.JSX.Element {

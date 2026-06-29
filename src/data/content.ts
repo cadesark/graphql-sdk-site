@@ -278,8 +278,100 @@ export const VS_TOOLS: ToolComparison[] = [
 
 export const LANGUAGES: { name: string; status: "done" | "next" }[] = [
     { name: "TypeScript", status: "done" },
-    { name: "Python", status: "next" },
+    { name: "Python", status: "done" },
     { name: "Go", status: "next" },
     { name: "Java", status: "next" },
     { name: "C#", status: "next" }
+];
+
+export interface PythonFeature {
+    title: string;
+    blurb: string;
+    snippet: Snippet;
+}
+
+export const PYTHON_FEATURES: PythonFeature[] = [
+    {
+        title: "Fluent builder selection",
+        blurb: "Python can't infer types from a runtime value (no mapped types), so selection is a generated fluent builder per type — chain field methods, get one document. Precision via IDE hints + runtime validation.",
+        snippet: {
+            lang: "python",
+            code: `product = client.query.product(
+    id="p-42",
+    selection=lambda p: p.name().price().reviews(
+        lambda r: r.rating().body()
+    ),
+)`
+        }
+    },
+    {
+        title: "Typed Pydantic responses",
+        blurb: "Operations return the typed Pydantic model — the same models Fern's REST Python SDK emits. Omit the selection for a safe default.",
+        snippet: {
+            lang: "python",
+            code: `user = client.query.user(id="u-1")
+print(user.name, user.email)   # typed attributes`
+        }
+    },
+    {
+        title: "Relay auto-pagination",
+        blurb: "Connections expose paginate.* returning a SyncPager / AsyncPager that follows pageInfo.endCursor and yields each typed node.",
+        snippet: {
+            lang: "python",
+            code: `for product in client.query.paginate.site_products(first=50):
+    print(product.name)`
+        }
+    },
+    {
+        title: "Async subscriptions",
+        blurb: "Subscriptions stream over graphql-transport-ws on the async client as an AsyncIterator of typed events; auth flows through connection-init.",
+        snippet: {
+            lang: "python",
+            code: `async for event in aclient.subscription.on_message(
+    room_id="r-1",
+    selection=lambda m: m.id().text(),
+):
+    print(event)`
+        }
+    },
+    {
+        title: "GraphqlError (partial success)",
+        blurb: "Operations raise a typed GraphqlError carrying .errors and any partial .data — GraphQL's partial-success protocol, surfaced cleanly.",
+        snippet: {
+            lang: "python",
+            code: `from acme.core.graphql import GraphqlError
+
+try:
+    data = client.query.user(id="u-1")
+except GraphqlError as error:
+    print(error.errors, error.data)`
+        }
+    },
+    {
+        title: "raw() escape hatch",
+        blurb: "Send a hand-written document and reuse the SDK's auth, retries, and base URL. Returns the data, or the full {data, errors} envelope.",
+        snippet: {
+            lang: "python",
+            code: `data = client.raw(
+    "query ($id: ID!) { order(id: $id) { id } }",
+    variables={"id": "order-123"},
+)`
+        }
+    }
+];
+
+export interface LanguageDiff {
+    aspect: string;
+    typescript: string;
+    python: string;
+}
+
+export const TS_VS_PYTHON: LanguageDiff[] = [
+    { aspect: "Selection", typescript: "Selection object, type-narrowed", python: "Fluent builder (lambda)" },
+    { aspect: "Result typing", typescript: "Compile-time exact (inference)", python: "IDE hints + runtime validation" },
+    { aspect: "Response model", typescript: "Narrowed Result<T, S>", python: "Typed Pydantic model" },
+    { aspect: "Pagination", typescript: "paginate.* async iterators", python: "paginate.* Sync/Async pagers" },
+    { aspect: "Subscriptions", typescript: "AsyncIterableIterator (WS)", python: "async AsyncIterator (WS)" },
+    { aspect: "Escape hatch", typescript: "raw()", python: "raw()" },
+    { aspect: "Shared", typescript: "same IR + analysis", python: "same IR + analysis" }
 ];
