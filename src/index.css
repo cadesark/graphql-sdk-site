@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+    --color-ink: #05070d;
+    --color-ink-soft: #0a0e18;
+    --color-panel: #0e1422;
+    --color-panel-soft: #141c2e;
+    --color-line: #1e2840;
+    --color-fern: #2dd4a7;
+    --color-fern-soft: #1f9e7c;
+    --color-cyan: #38bdf8;
+    --color-violet: #a78bfa;
+    --color-amber: #fbbf24;
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-ink);
+    color: #e2e8f0;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+/* Ambient grid + glow backdrop */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+        radial-gradient(900px 600px at 75% -10%, rgba(45, 212, 167, 0.12), transparent 60%),
+        radial-gradient(800px 500px at 10% 10%, rgba(56, 189, 248, 0.08), transparent 55%);
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(circle at 50% 30%, black, transparent 85%);
+}
+
+::selection {
+    background: rgba(45, 212, 167, 0.3);
+}
+
+/* Thin scrollbars */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Shiki overrides — let our panel background show, keep mono font */
+.shiki {
+    background: transparent !important;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    overflow-x: auto;
+}
+.shiki code {
+    font-family: var(--font-mono);
+}
+
+.glow-fern {
+    box-shadow: 0 0 0 1px rgba(45, 212, 167, 0.25), 0 18px 60px -28px rgba(45, 212, 167, 0.5);
+}
